@@ -12,12 +12,12 @@ const config: Config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2x1": "1400px",
+        "2xl": "1400px",
       },
     },
     extend: {
       maxWidth: {
-        "8x1": "1400px",
+        "8xl": "1408px",
       },
       colors: {
         border: "hsl(var(--border))",
