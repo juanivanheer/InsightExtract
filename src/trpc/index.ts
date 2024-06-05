@@ -29,13 +29,15 @@ export const appRouter = router({
 
     return { success: true };
   }),
-  getUserFiles: privateProcedure.query(async ({ ctx }) => {
-    const {
-      user: { id: userId },
-    } = ctx;
-
-    return await db.file.findMany({ where: { userId } });
-  }),
+  getUserFiles: privateProcedure.query(
+    async ({
+      ctx: {
+        user: { id: userId },
+      },
+    }) => {
+      return await db.file.findMany({ where: { userId } });
+    },
+  ),
   getFileUploadStatus: privateProcedure
     .input(z.object({ fileId: z.string() }))
     .mutation(
@@ -57,15 +59,16 @@ export const appRouter = router({
         return { status: file.uploadStatus };
       },
     ),
-  getFile: privateProcedure
-    .input(z.object({ key: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      const {
+  getFile: privateProcedure.input(z.object({ key: z.string() })).mutation(
+    async ({
+      ctx: {
         user: { id: userId },
-      } = ctx;
+      },
+      input: { key },
+    }) => {
       const file = await db.file.findFirst({
         where: {
-          key: input.key,
+          key,
           userId,
         },
       });
@@ -73,22 +76,24 @@ export const appRouter = router({
       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
 
       return file;
-    }),
-  deleteFile: privateProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      const {
+    },
+  ),
+  deleteFile: privateProcedure.input(z.object({ id: z.string() })).mutation(
+    async ({
+      ctx: {
         user: { id: userId },
-      } = ctx;
-
-      const file = await db.file.findFirst({ where: { id: input.id, userId } });
+      },
+      input: { id },
+    }) => {
+      const file = await db.file.findFirst({ where: { id, userId } });
 
       if (!file) throw new TRPCError({ code: "NOT_FOUND" });
 
-      await db.file.delete({ where: { id: input.id } });
+      await db.file.delete({ where: { id } });
 
       return file;
-    }),
+    },
+  ),
 });
 
 export type AppRouter = typeof appRouter;
