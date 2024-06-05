@@ -40,7 +40,7 @@ export const appRouter = router({
   ),
   getFileUploadStatus: privateProcedure
     .input(z.object({ fileId: z.string() }))
-    .mutation(
+    .query(
       async ({
         input: { fileId: id },
         ctx: {
