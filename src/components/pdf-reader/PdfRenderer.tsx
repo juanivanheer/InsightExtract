@@ -2,14 +2,14 @@
 
 import PdfDocumentViewer from "./PdfDocumentViewer";
 import PdfFullScreeen from "./PdfFullScreen";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Input } from "./ui/input";
+} from "../ui/dropdown-menu";
+import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDown, ChevronUp, RotateCw, Search } from "lucide-react";
