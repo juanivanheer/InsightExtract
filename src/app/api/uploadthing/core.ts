@@ -1,7 +1,7 @@
+import { pineconeIndex } from "../../../lib/pinecone";
 import { db } from "@/db";
-import { pinecone } from "@/lib/pinecone";
+import { opeenAIEmbeddings } from "@/lib/openai";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { PineconeStore } from "@langchain/pinecone";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { type FileRouter, createUploadthing } from "uploadthing/next";
@@ -35,18 +35,10 @@ export const ourFileRouter = {
 
         const loader = new PDFLoader(blob);
         const pageLevelDocs = await loader.load();
-        console.log("pageLevelDocs");
-        console.log(pageLevelDocs);
 
         // const pagesAmt = pageLevelDocs.length;
 
-        const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX!);
-
-        const embeddings = new OpenAIEmbeddings({
-          openAIApiKey: process.env.OPEN_AI_KEY,
-        });
-
-        await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
+        await PineconeStore.fromDocuments(pageLevelDocs, opeenAIEmbeddings, {
           pineconeIndex,
           namespace: createdFile.id,
         });
