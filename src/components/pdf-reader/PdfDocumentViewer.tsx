@@ -1,9 +1,9 @@
+import { useToast } from "../ui/use-toast";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import { Document, Page } from "react-pdf";
 import { useResizeDetector } from "react-resize-detector";
-import { useToast } from "./ui/use-toast";
 
 type OnLoadSuccessParams = PDFDocumentProxy;
 
@@ -15,7 +15,7 @@ type PdfDocumentViewerProps = {
   rotate?: number;
   renderedScale?: number | null;
   onLoadSuccess?: ({ numPages }: OnLoadSuccessParams) => void;
-  setRenderedScale: (value: number | null) => void;
+  setRenderedScale?: (value: number | null) => void;
 };
 
 const PdfDocumentViewer = ({
@@ -69,7 +69,7 @@ const PdfDocumentViewer = ({
         rotate={rotate}
         loading={pdfLoading}
         onRenderSuccess={() => {
-          if (scale) setRenderedScale(scale);
+          if (scale && setRenderedScale) setRenderedScale(scale);
         }}
       />
     </>
