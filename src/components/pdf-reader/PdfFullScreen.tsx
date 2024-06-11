@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-import { Button } from "./ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import { Button } from "../ui/button";
 import { Expand } from "lucide-react";
 import SimpleBar from "simplebar-react";
 import PdfDocumentViewer from "./PdfDocumentViewer";
